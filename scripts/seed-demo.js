@@ -12,40 +12,38 @@ const profile = {
   headline: "Software Engineer & AI Enthusiast",
   bio: "I am a university student studying Informatics Engineering at Universitas Muhammadiyah Jakarta. My work spans web development, data analysis, machine learning, and natural language processing.\n\nOn the backend, I build with Node.js, Express, and Prisma against PostgreSQL. On the frontend, I work with React and modern JavaScript. I have also applied Python and scikit-learn to sentiment analysis and text classification tasks as part of academic capstone projects.\n\nI am currently focused on shipping real projects: an AI-powered tourism platform, a student organization website, and this portfolio itself. I learn best by building things that solve actual problems.",
   location: "Jakarta, Indonesia",
-  email: "hello@alexpratama.dev",
-  profileImageUrl: "https://placehold.co/400x400/1a1a2e/e0e0e0?text=AP",
-  resumeUrl: "https://example.com/alex-pratama-resume.pdf",
+  email: null,
+  profileImageUrl: null,
+  resumeUrl: null,
 };
 
 const skills = [
   { name: "React", category: "Frontend", sortOrder: 1 },
   { name: "JavaScript", category: "Frontend", sortOrder: 2 },
-  { name: "HTML & CSS", category: "Frontend", sortOrder: 3 },
-  { name: "Node.js", category: "Backend", sortOrder: 4 },
-  { name: "Express", category: "Backend", sortOrder: 5 },
-  { name: "Prisma", category: "Backend", sortOrder: 6 },
-  { name: "PostgreSQL", category: "Database", sortOrder: 7 },
-  { name: "Python", category: "Data & AI", sortOrder: 8 },
-  { name: "Machine Learning", category: "Data & AI", sortOrder: 9 },
-  { name: "Natural Language Processing", category: "Data & AI", sortOrder: 10 },
+  { name: "Node.js", category: "Backend", sortOrder: 3 },
+  { name: "Express", category: "Backend", sortOrder: 4 },
+  { name: "Prisma", category: "Backend", sortOrder: 5 },
+  { name: "PostgreSQL", category: "Database", sortOrder: 6 },
+  { name: "Python", category: "Data & AI", sortOrder: 7 },
+  { name: "Machine Learning", category: "Data & AI", sortOrder: 8 },
 ];
 
 const experiences = [
   {
-    role: "Machine Learning Engineer",
+    role: "ML Pipeline Developer",
     organization: "Kemari Capstone Project",
     description:
-      "Built a sentiment analysis pipeline for tourism reviews using Python, scikit-learn, and Hugging Face transformers. Processed and labeled a multilingual dataset, trained classification models, and integrated the model into a web application for real-time inference.",
+      "Designed and built the sentiment analysis pipeline for a smart tourism platform as part of a university capstone project. Processed multilingual tourism reviews, trained classification models using Python, scikit-learn, and Hugging Face transformers, and integrated the model into a web application for real-time inference.",
     location: "Jakarta, Indonesia",
     startDate: "2025-09-01",
     endDate: "2026-02-28",
     sortOrder: 1,
   },
   {
-    role: "Full-Stack Developer",
+    role: "Developer",
     organization: "HMIF FT-UMJ Website",
     description:
-      "Designed and developed the official website for Himpunan Mahasiswa Informatika FT-UMJ. Implemented the admin CMS, public project showcase, and member management features using Node.js, Express, Prisma, and React.",
+      "Built the official website for Himpunan Mahasiswa Informatika FT-UMJ. Implemented the admin CMS, public project showcase, and content management features using Node.js, Express, Prisma, and React.",
     location: "Jakarta, Indonesia",
     startDate: "2025-03-01",
     endDate: null,
@@ -90,7 +88,7 @@ const projects = [
       "scikit-learn",
       "PostgreSQL",
     ],
-    repositoryUrl: "https://github.com/alexpratama/kemari",
+    repositoryUrl: null,
     demoUrl: null,
     category: "AI & Machine Learning",
     status: "COMPLETED",
@@ -114,7 +112,7 @@ const projects = [
       "Prisma",
       "PostgreSQL",
     ],
-    repositoryUrl: "https://github.com/alexpratama/hmif-website",
+    repositoryUrl: null,
     demoUrl: null,
     category: "Web Development",
     status: "IN_PROGRESS",
@@ -138,7 +136,7 @@ const projects = [
       "Prisma",
       "PostgreSQL",
     ],
-    repositoryUrl: "https://github.com/alexpratama/ksm-tirta",
+    repositoryUrl: null,
     demoUrl: null,
     category: "Web Development",
     status: "IN_PROGRESS",
@@ -161,7 +159,7 @@ const projects = [
       "NLP",
       "Data Visualization",
     ],
-    repositoryUrl: "https://github.com/alexpratama/youtube-analysis",
+    repositoryUrl: null,
     demoUrl: null,
     category: "Data & NLP",
     status: "COMPLETED",
@@ -186,7 +184,7 @@ const projects = [
       "PostgreSQL",
       "JWT",
     ],
-    repositoryUrl: "https://github.com/alexpratama/portfolio",
+    repositoryUrl: null,
     demoUrl: null,
     category: "Web Development",
     status: "IN_PROGRESS",
@@ -198,56 +196,7 @@ const projects = [
   },
 ];
 
-const projectImages = [
-  {
-    projectSlug: "kemari-ai-smart-tourism",
-    url: "https://placehold.co/1200x630/1a1a2e/00d4aa?text=Kemari+Dashboard",
-    altText: "Kemari sentiment analysis dashboard showing tourism review insights",
-    sortOrder: 0,
-  },
-  {
-    projectSlug: "kemari-ai-smart-tourism",
-    url: "https://placehold.co/1200x630/1a1a2e/00d4aa?text=Kemari+Results",
-    altText: "Kemari model output with classified sentiment results",
-    sortOrder: 1,
-  },
-  {
-    projectSlug: "hmif-ft-umj-website",
-    url: "https://placehold.co/1200x630/1a1a2e/4a9eff?text=HMIF+Homepage",
-    altText: "HMIF FT-UMJ website homepage with project showcase",
-    sortOrder: 0,
-  },
-  {
-    projectSlug: "hmif-ft-umj-website",
-    url: "https://placehold.co/1200x630/1a1a2e/4a9eff?text=HMIF+Admin",
-    altText: "HMIF admin CMS for managing projects and events",
-    sortOrder: 1,
-  },
-  {
-    projectSlug: "ksm-tirta-water-management",
-    url: "https://placehold.co/1200x630/1a1a2e/ff6b6b?text=KSM+Tirta",
-    altText: "KSM Tirta water meter management interface",
-    sortOrder: 0,
-  },
-  {
-    projectSlug: "youtube-brainrot-analysis",
-    url: "https://placehold.co/1200x630/1a1a2e/ffd93d?text=YouTube+Analysis",
-    altText: "YouTube comment analysis dataset visualization",
-    sortOrder: 0,
-  },
-  {
-    projectSlug: "personal-portfolio",
-    url: "https://placehold.co/1200x630/1a1a2e/8b5cf6?text=Portfolio",
-    altText: "Personal portfolio website homepage",
-    sortOrder: 0,
-  },
-  {
-    projectSlug: "personal-portfolio",
-    url: "https://placehold.co/1200x630/1a1a2e/8b5cf6?text=Portfolio+Admin",
-    altText: "Portfolio admin CMS dashboard",
-    sortOrder: 1,
-  },
-];
+const projectImages = [];
 
 const certificates = [
   {
@@ -260,84 +209,11 @@ const certificates = [
       "Completed the AI Engineering learning path covering machine learning fundamentals, model training, and deployment.",
     sortOrder: 1,
   },
-  {
-    name: "Natural Language Processing Training",
-    issuer: "University Program",
-    issueDate: "2025-11-20",
-    credentialUrl: null,
-    imageUrl: null,
-    description:
-      "Completed training in text preprocessing, sentiment analysis, and transformer-based NLP models.",
-    sortOrder: 2,
-  },
-  {
-    name: "TensorFlow Developer Model Deployment",
-    issuer: "Development Program",
-    issueDate: "2025-08-10",
-    credentialUrl: null,
-    imageUrl: null,
-    description:
-      "Trained in building and deploying TensorFlow models for production use cases.",
-    sortOrder: 3,
-  },
 ];
 
-const achievements = [
-  {
-    title: "Machine Learning Engineer — Kemari Capstone",
-    description:
-      "Led the ML pipeline design and implementation for the Kemari smart tourism platform as part of the university capstone project.",
-    organization: "Universitas Muhammadiyah Jakarta",
-    date: "2026-02-28",
-    url: null,
-    sortOrder: 1,
-  },
-  {
-    title: "Guest Speaker — Student Sharing Session",
-    description:
-      "Presented practical experience with NLP and sentiment analysis to fellow informatics students.",
-    organization: "HMIF FT-UMJ",
-    date: "2025-12-10",
-    url: null,
-    sortOrder: 2,
-  },
-  {
-    title: "AI Engineering Project Presentation",
-    description:
-      "Presented the Kemari AI platform at the departmental project showcase, demonstrating real-world NLP applications in tourism.",
-    organization: "Universitas Muhammadiyah Jakarta",
-    date: "2026-03-05",
-    url: null,
-    sortOrder: 3,
-  },
-];
+const achievements = [];
 
-const socialLinks = [
-  {
-    platform: "GitHub",
-    url: "https://github.com/alexpratama",
-    label: "GitHub",
-    sortOrder: 1,
-  },
-  {
-    platform: "LinkedIn",
-    url: "https://www.linkedin.com/in/alexpratama",
-    label: "LinkedIn",
-    sortOrder: 2,
-  },
-  {
-    platform: "Instagram",
-    url: "https://instagram.com/alexpratama",
-    label: "Instagram",
-    sortOrder: 3,
-  },
-  {
-    platform: "Website",
-    url: "https://alexpratama.dev",
-    label: "Personal Website",
-    sortOrder: 4,
-  },
-];
+const socialLinks = [];
 
 const contactMessages = [
   {
