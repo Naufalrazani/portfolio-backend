@@ -42,3 +42,10 @@ export const deleteProjectImage = (id) => {
     where: { id },
   });
 };
+
+export const findProjectImagesByProjectId = (projectId) => {
+  return prisma.projectImage.findMany({
+    where: { projectId },
+    select: { id: true, url: true },
+  });
+};

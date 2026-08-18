@@ -41,10 +41,17 @@ if (nodeEnv === "production") {
   corsOrigin = raw.split(",").map((o) => o.trim());
 }
 
+const cloudinaryCloudName = process.env.CLOUDINARY_CLOUD_NAME || undefined;
+const cloudinaryApiKey = process.env.CLOUDINARY_API_KEY || undefined;
+const cloudinaryApiSecret = process.env.CLOUDINARY_API_SECRET || undefined;
+
 export const env = {
   nodeEnv,
   port,
   jwtSecret,
   databaseUrl,
   corsOrigin,
+  cloudinaryCloudName,
+  cloudinaryApiKey,
+  cloudinaryApiSecret,
 };

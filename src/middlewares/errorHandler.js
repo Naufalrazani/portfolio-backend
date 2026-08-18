@@ -37,6 +37,33 @@ export function errorHandler(err, req, res, next) {
     });
   }
 
+  if (err.code === "LIMIT_FILE_SIZE") {
+    return res.status(422).json({
+      error: {
+        code: "FILE_TOO_LARGE",
+        message: "File must be 5MB or smaller.",
+      },
+    });
+  }
+
+  if (err.code === "LIMIT_UNEXPECTED_FILE") {
+    return res.status(400).json({
+      error: {
+        code: "INVALID_MULTIPART",
+        message: "Unexpected field in multipart data.",
+      },
+    });
+  }
+
+  if (err.code === "LIMIT_NO_FILE") {
+    return res.status(400).json({
+      error: {
+        code: "MISSING_FILE",
+        message: "No file provided.",
+      },
+    });
+  }
+
   console.error(err);
 
   res.status(500).json({

@@ -8,6 +8,7 @@ import {
   findPublishedProjectBySlug,
   updateProject as updateProjectInDatabase,
 } from "../repositories/project.repository.js";
+import { deleteProjectImagesByProjectId } from "./project-image.service.js";
 
 const projectNotFoundError = () => {
   return {
@@ -163,6 +164,8 @@ export const deleteProject = async (id) => {
   if (!existing) {
     throw projectNotFoundError();
   }
+
+  await deleteProjectImagesByProjectId(id);
 
   return deleteProjectInDatabase(id);
 };

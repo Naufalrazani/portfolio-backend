@@ -5,8 +5,10 @@ import {
   deleteProjectImage,
   getProjectImageById,
   updateProjectImage,
+  uploadProjectImage,
 } from "../controllers/project-image.controller.js";
 import { authenticate } from "../middlewares/auth.middleware.js";
+import { uploadProjectImageFile } from "../middlewares/upload.js";
 import {
   validateCreateProjectImage,
   validateProjectImageId,
@@ -14,6 +16,13 @@ import {
 } from "../validators/project-image.validator.js";
 
 const router = Router();
+
+router.post(
+  "/project-images/upload",
+  authenticate,
+  uploadProjectImageFile,
+  uploadProjectImage,
+);
 
 router.post(
   "/project-images",
