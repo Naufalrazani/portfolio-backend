@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ProjectStatus {
+  IN_PROGRESS
+  COMPLETED
+  ARCHIVED
+}
+
+model AdminUser {
+  id           String   @id @default(uuid()) @db.Uuid
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime @updatedAt @db.Timestamptz(3)
+}
+
+model Profile {
+  id              String   @id @default(uuid()) @db.Uuid
+  name            String
+  headline        String
+  bio             String
+  location        String?
+  email           String?
+  profileImageUrl String?
+  resumeUrl       String?
+  createdAt       DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @db.Timestamptz(3)
+}
+
+model SocialLink {
+  id        String   @id @default(uuid()) @db.Uuid
+  platform  String   @unique
+  url       String
+  label     String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+}
+
+model Skill {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique
+  category  String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+}
+
+model Experience {
+  id           String    @id @default(uuid()) @db.Uuid
+  role         String
+  organization String
+  description  String?
+  location     String?
+  startDate    DateTime  @db.Date
+  endDate      DateTime? @db.Date
+  sortOrder    Int       @default(0)
+  createdAt    DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime  @updatedAt @db.Timestamptz(3)
+}
+
+model Education {
+  id           String    @id @default(uuid()) @db.Uuid
+  institution  String
+  degree       String?
+  fieldOfStudy String?
+  description  String?
+  startDate    DateTime? @db.Date
+  endDate      DateTime? @db.Date
+  sortOrder    Int       @default(0)
+  createdAt    DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime  @updatedAt @db.Timestamptz(3)
+}
+
+model Project {
+  id               String         @id @default(uuid()) @db.Uuid
+  title            String
+  slug             String         @unique
+  shortDescription String?
+  description      String
+  technologies     String[]
+  repositoryUrl    String?
+  demoUrl          String?
+  category         String?
+  status           ProjectStatus
+  published        Boolean
+  featured         Boolean
+  startDate        DateTime?      @db.Date
+  endDate          DateTime?      @db.Date
+  sortOrder        Int            @default(0)
+  createdAt        DateTime       @default(now()) @db.Timestamptz(3)
+  updatedAt        DateTime       @updatedAt @db.Timestamptz(3)
+  images           ProjectImage[]
+
+  @@index([published, sortOrder])
+}
+
+model ProjectImage {
+  id        String   @id @default(uuid()) @db.Uuid
+  projectId String   @db.Uuid
+  url       String
+  altText   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([projectId, sortOrder])
+}
+
+model Certificate {
+  id            String    @id @default(uuid()) @db.Uuid
+  name          String
+  issuer        String
+  issueDate     DateTime? @db.Date
+  credentialUrl String?
+  imageUrl      String?
+  description   String?
+  sortOrder     Int       @default(0)
+  createdAt     DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime  @updatedAt @db.Timestamptz(3)
+}
+
+model Achievement {
+  id           String    @id @default(uuid()) @db.Uuid
+  title        String
+  description  String?
+  organization String?
+  date         DateTime? @db.Date
+  url          String?
+  sortOrder    Int       @default(0)
+  createdAt    DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime  @updatedAt @db.Timestamptz(3)
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  email     String
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([isRead, createdAt])
+}
