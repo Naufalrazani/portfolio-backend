@@ -7,7 +7,7 @@ import {
   getCertificates,
   updateCertificate,
 } from "../controllers/certificate.controller.js";
-import { authenticate } from "../middlewares/auth.middleware.js";
+import { authenticate, optionalAuthenticate } from "../middlewares/auth.middleware.js";
 import {
   validateCreateCertificate,
   validateCertificateId,
@@ -16,7 +16,7 @@ import {
 
 const router = Router();
 
-router.get("/certificates", getCertificates);
+router.get("/certificates", optionalAuthenticate, getCertificates);
 
 router.post(
   "/certificates",

@@ -7,7 +7,7 @@ import {
   getExperiences,
   updateExperience,
 } from "../controllers/experience.controller.js";
-import { authenticate } from "../middlewares/auth.middleware.js";
+import { authenticate, optionalAuthenticate } from "../middlewares/auth.middleware.js";
 import {
   validateCreateExperience,
   validateExperienceId,
@@ -16,7 +16,7 @@ import {
 
 const router = Router();
 
-router.get("/experiences", getExperiences);
+router.get("/experiences", optionalAuthenticate, getExperiences);
 
 router.post(
   "/experiences",

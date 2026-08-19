@@ -7,7 +7,7 @@ import {
   getAchievements,
   updateAchievement,
 } from "../controllers/achievement.controller.js";
-import { authenticate } from "../middlewares/auth.middleware.js";
+import { authenticate, optionalAuthenticate } from "../middlewares/auth.middleware.js";
 import {
   validateCreateAchievement,
   validateAchievementId,
@@ -16,7 +16,7 @@ import {
 
 const router = Router();
 
-router.get("/achievements", getAchievements);
+router.get("/achievements", optionalAuthenticate, getAchievements);
 
 router.post(
   "/achievements",

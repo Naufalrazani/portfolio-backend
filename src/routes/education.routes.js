@@ -7,7 +7,7 @@ import {
   getEducation,
   updateEducation,
 } from "../controllers/education.controller.js";
-import { authenticate } from "../middlewares/auth.middleware.js";
+import { authenticate, optionalAuthenticate } from "../middlewares/auth.middleware.js";
 import {
   validateCreateEducation,
   validateEducationId,
@@ -16,7 +16,7 @@ import {
 
 const router = Router();
 
-router.get("/education", getEducation);
+router.get("/education", optionalAuthenticate, getEducation);
 
 router.post(
   "/education",

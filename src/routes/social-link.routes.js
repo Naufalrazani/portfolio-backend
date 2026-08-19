@@ -7,7 +7,7 @@ import {
   getSocialLinks,
   updateSocialLink,
 } from "../controllers/social-link.controller.js";
-import { authenticate } from "../middlewares/auth.middleware.js";
+import { authenticate, optionalAuthenticate } from "../middlewares/auth.middleware.js";
 import {
   validateCreateSocialLink,
   validateSocialLinkId,
@@ -16,7 +16,7 @@ import {
 
 const router = Router();
 
-router.get("/social-links", getSocialLinks);
+router.get("/social-links", optionalAuthenticate, getSocialLinks);
 
 router.post(
   "/social-links",

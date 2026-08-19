@@ -7,7 +7,7 @@ import {
   getSkills,
   updateSkill,
 } from "../controllers/skill.controller.js";
-import { authenticate } from "../middlewares/auth.middleware.js";
+import { authenticate, optionalAuthenticate } from "../middlewares/auth.middleware.js";
 import {
   validateCreateSkill,
   validateSkillId,
@@ -16,7 +16,7 @@ import {
 
 const router = Router();
 
-router.get("/skills", getSkills);
+router.get("/skills", optionalAuthenticate, getSkills);
 
 router.post("/skills", authenticate, validateCreateSkill, createSkill);
 
