@@ -9,7 +9,8 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "lint": "eslint .",
-    "postinstall": "prisma generate && prisma migrate deploy",
+    "postinstall": "prisma generate",
+    "migrate:deploy": "prisma migrate deploy",
     "seed:admin": "node scripts/seed-admin.js",
     "seed:demo": "node scripts/seed-demo.js",
     "test": "echo \"Error: no test specified\" && exit 1"

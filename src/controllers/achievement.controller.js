@@ -1,10 +1,12 @@
 import {
   createAchievement as createAchievementService,
   deleteAchievement as deleteAchievementService,
+  deleteAchievementImage as deleteAchievementImageService,
   getAchievementById as getAchievementByIdService,
   listAchievementsAdmin,
   listAchievementsPublic,
   updateAchievement as updateAchievementService,
+  uploadAchievementImage as uploadAchievementImageService,
 } from "../services/achievement.service.js";
 
 export const getAchievements = async (req, res) => {
@@ -39,4 +41,16 @@ export const deleteAchievement = async (req, res) => {
   await deleteAchievementService(req.params.id);
 
   res.status(204).end();
+};
+
+export const uploadAchievementImage = async (req, res) => {
+  const achievement = await uploadAchievementImageService(req.params.id, req.file);
+
+  res.json({ data: achievement });
+};
+
+export const deleteAchievementImage = async (req, res) => {
+  const achievement = await deleteAchievementImageService(req.params.id);
+
+  res.json({ data: achievement });
 };

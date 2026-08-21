@@ -3,11 +3,14 @@ import { Router } from "express";
 import {
   createAchievement,
   deleteAchievement,
+  deleteAchievementImage,
   getAchievementById,
   getAchievements,
   updateAchievement,
+  uploadAchievementImage,
 } from "../controllers/achievement.controller.js";
 import { authenticate, optionalAuthenticate } from "../middlewares/auth.middleware.js";
+import { uploadEntityImageFile } from "../middlewares/upload.js";
 import {
   validateCreateAchievement,
   validateAchievementId,
@@ -45,6 +48,21 @@ router.delete(
   authenticate,
   validateAchievementId,
   deleteAchievement,
+);
+
+router.post(
+  "/achievements/:id/image",
+  authenticate,
+  validateAchievementId,
+  uploadEntityImageFile,
+  uploadAchievementImage,
+);
+
+router.delete(
+  "/achievements/:id/image",
+  authenticate,
+  validateAchievementId,
+  deleteAchievementImage,
 );
 
 export default router;

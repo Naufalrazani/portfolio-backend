@@ -75,6 +75,12 @@ const validateFieldValues = (body, next) => {
     }
   }
 
+  if (body.imageUrl !== undefined && body.imageUrl !== null) {
+    if (typeof body.imageUrl !== "string") {
+      return next(validationError("Image URL must be a string."));
+    }
+  }
+
   if (body.startDate !== undefined) {
     if (typeof body.startDate !== "string" || !isValidDate(body.startDate)) {
       return next(validationError("Start date must be a valid date (YYYY-MM-DD)."));
@@ -84,6 +90,12 @@ const validateFieldValues = (body, next) => {
   if (body.endDate !== undefined && body.endDate !== null) {
     if (typeof body.endDate !== "string" || !isValidDate(body.endDate)) {
       return next(validationError("End date must be a valid date (YYYY-MM-DD)."));
+    }
+  }
+
+  if (body.startDate && body.endDate) {
+    if (body.startDate >= body.endDate) {
+      return next(validationError("End date must be later than start date."));
     }
   }
 

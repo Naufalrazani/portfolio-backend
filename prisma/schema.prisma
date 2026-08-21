@@ -59,6 +59,7 @@ model Experience {
   organization String
   description  String?
   location     String?
+  imageUrl     String?
   startDate    DateTime  @db.Date
   endDate      DateTime? @db.Date
   sortOrder    Int       @default(0)
@@ -72,6 +73,7 @@ model Education {
   degree       String?
   fieldOfStudy String?
   description  String?
+  imageUrl     String?
   startDate    DateTime? @db.Date
   endDate      DateTime? @db.Date
   sortOrder    Int       @default(0)
@@ -133,6 +135,7 @@ model Achievement {
   title        String
   description  String?
   organization String?
+  imageUrl     String?
   date         DateTime? @db.Date
   url          String?
   sortOrder    Int       @default(0)

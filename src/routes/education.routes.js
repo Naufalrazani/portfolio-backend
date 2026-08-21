@@ -3,11 +3,14 @@ import { Router } from "express";
 import {
   createEducation,
   deleteEducation,
+  deleteEducationImage,
   getEducationById,
   getEducation,
   updateEducation,
+  uploadEducationImage,
 } from "../controllers/education.controller.js";
 import { authenticate, optionalAuthenticate } from "../middlewares/auth.middleware.js";
+import { uploadEntityImageFile } from "../middlewares/upload.js";
 import {
   validateCreateEducation,
   validateEducationId,
@@ -45,6 +48,21 @@ router.delete(
   authenticate,
   validateEducationId,
   deleteEducation,
+);
+
+router.post(
+  "/education/:id/image",
+  authenticate,
+  validateEducationId,
+  uploadEntityImageFile,
+  uploadEducationImage,
+);
+
+router.delete(
+  "/education/:id/image",
+  authenticate,
+  validateEducationId,
+  deleteEducationImage,
 );
 
 export default router;

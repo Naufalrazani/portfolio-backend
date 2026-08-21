@@ -55,11 +55,57 @@ export function uploadImage(buffer, folder) {
   });
 }
 
+function sanitizeFilename(name) {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_|_$/g, "");
+}
+
+export function uploadRaw(buffer, folder, originalFilename) {
+  ensureConfigured();
+
+  const stem = sanitizeFilename(originalFilename.replace(/\.pdf$/i, ""));
+  const dataUri = `data:application/pdf;base64,${buffer.toString("base64")}`;
+
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.upload(
+      dataUri,
+      { folder, resource_type: "raw", public_id: stem },
+      (error, result) => {
+        if (error) {
+          reject({
+            status: 500,
+            code: "STORAGE_ERROR",
+            message: "File upload failed.",
+          });
+          return;
+        }
+        resolve({ url: result.secure_url, filename: `${stem}.pdf` });
+      },
+    );
+  });
+}
+
 export function deleteImage(publicId) {
   ensureConfigured();
 
   return new Promise((resolve, reject) => {
     cloudinary.uploader.destroy(publicId, { resource_type: "image" }, (error) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve();
+    });
+  });
+}
+
+export function deleteRaw(publicId) {
+  ensureConfigured();
+
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.destroy(publicId, { resource_type: "raw" }, (error) => {
       if (error) {
         reject(error);
         return;

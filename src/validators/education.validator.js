@@ -87,6 +87,12 @@ const validateFieldValues = (body, next) => {
     }
   }
 
+  if (body.startDate && body.endDate) {
+    if (body.startDate >= body.endDate) {
+      return next(validationError("End date must be later than start date."));
+    }
+  }
+
   if (body.sortOrder !== undefined) {
     if (body.sortOrder === null) {
       return next(validationError("Sort order must be an integer."));

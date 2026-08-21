@@ -1,10 +1,12 @@
 import {
   createExperience as createExperienceService,
   deleteExperience as deleteExperienceService,
+  deleteExperienceImage as deleteExperienceImageService,
   getExperienceById as getExperienceByIdService,
   listExperiencesAdmin,
   listExperiencesPublic,
   updateExperience as updateExperienceService,
+  uploadExperienceImage as uploadExperienceImageService,
 } from "../services/experience.service.js";
 
 export const getExperiences = async (req, res) => {
@@ -39,4 +41,16 @@ export const deleteExperience = async (req, res) => {
   await deleteExperienceService(req.params.id);
 
   res.status(204).end();
+};
+
+export const uploadExperienceImage = async (req, res) => {
+  const experience = await uploadExperienceImageService(req.params.id, req.file);
+
+  res.json({ data: experience });
+};
+
+export const deleteExperienceImage = async (req, res) => {
+  const experience = await deleteExperienceImageService(req.params.id);
+
+  res.json({ data: experience });
 };

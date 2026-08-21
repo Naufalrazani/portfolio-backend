@@ -6,6 +6,12 @@ import {
   findEducationById,
   updateEducation as updateEducationInDatabase,
 } from "../repositories/education.repository.js";
+import {
+  deleteImage,
+  extractPublicIdFromUrl,
+  isConfigured,
+  uploadImage,
+} from "../lib/cloudinary.js";
 
 const educationNotFoundError = () => {
   return {
@@ -39,6 +45,7 @@ export const createEducation = async (input) => {
     degree: input.degree ?? null,
     fieldOfStudy: input.fieldOfStudy ?? null,
     description: input.description ?? null,
+    imageUrl: input.imageUrl ?? null,
     startDate: input.startDate != null ? new Date(input.startDate) : null,
     endDate: input.endDate != null ? new Date(input.endDate) : null,
     sortOrder: input.sortOrder ?? 0,
@@ -66,6 +73,9 @@ export const updateEducation = async (id, input) => {
   if (input.description !== undefined) {
     data.description = input.description;
   }
+  if (input.imageUrl !== undefined) {
+    data.imageUrl = input.imageUrl;
+  }
   if (input.startDate !== undefined) {
     data.startDate = input.startDate != null ? new Date(input.startDate) : null;
   }
@@ -87,4 +97,79 @@ export const deleteEducation = async (id) => {
   }
 
   return deleteEducationInDatabase(id);
+};
+
+const ALLOWED_MAGIC_BYTES = [
+  { mime: "image/jpeg", bytes: [0xff, 0xd8, 0xff] },
+  { mime: "image/png", bytes: [0x89, 0x50, 0x4e, 0x47] },
+  { mime: "image/webp", check: (buf) => buf.length >= 12 && buf.toString("ascii", 0, 4) === "RIFF" && buf.toString("ascii", 8, 12) === "WEBP" },
+];
+
+function validateMagicBytes(buffer) {
+  return ALLOWED_MAGIC_BYTES.some((rule) => {
+    if (rule.check) return rule.check(buffer);
+    return buffer.slice(0, rule.bytes.length).every((b, i) => b === rule.bytes[i]);
+  });
+}
+
+async function deleteImageFromStorage(url) {
+  if (!isConfigured()) return;
+  const publicId = extractPublicIdFromUrl(url);
+  if (!publicId) return;
+  try {
+    await deleteImage(publicId);
+  } catch (error) {
+    console.error(`Failed to delete Cloudinary image ${publicId}:`, error.message || error);
+  }
+}
+
+export const uploadEducationImage = async (id, file) => {
+  const existing = await findEducationById(id);
+
+  if (!existing) {
+    throw educationNotFoundError();
+  }
+
+  if (!file) {
+    throw { status: 400, code: "MISSING_FILE", message: "No file provided." };
+  }
+
+  if (!validateMagicBytes(file.buffer)) {
+    throw { status: 422, code: "INVALID_FILE_TYPE", message: "File must be JPEG, PNG, or WebP." };
+  }
+
+  if (!isConfigured()) {
+    throw { status: 500, code: "STORAGE_NOT_CONFIGURED", message: "Image storage is not configured." };
+  }
+
+  const oldUrl = existing.imageUrl;
+
+  let result;
+  try {
+    result = await uploadImage(file.buffer, `portfolio/education/${id}`);
+  } catch {
+    throw { status: 500, code: "STORAGE_ERROR", message: "Image upload failed." };
+  }
+
+  const updated = await updateEducationInDatabase(id, { imageUrl: result.url });
+
+  if (oldUrl) {
+    await deleteImageFromStorage(oldUrl);
+  }
+
+  return updated;
+};
+
+export const deleteEducationImage = async (id) => {
+  const existing = await findEducationById(id);
+
+  if (!existing) {
+    throw educationNotFoundError();
+  }
+
+  if (existing.imageUrl) {
+    await deleteImageFromStorage(existing.imageUrl);
+  }
+
+  return updateEducationInDatabase(id, { imageUrl: null });
 };

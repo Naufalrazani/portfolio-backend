@@ -1,10 +1,12 @@
 import {
   createEducation as createEducationService,
   deleteEducation as deleteEducationService,
+  deleteEducationImage as deleteEducationImageService,
   getEducationById as getEducationByIdService,
   listEducationAdmin,
   listEducationPublic,
   updateEducation as updateEducationService,
+  uploadEducationImage as uploadEducationImageService,
 } from "../services/education.service.js";
 
 export const getEducation = async (req, res) => {
@@ -39,4 +41,16 @@ export const deleteEducation = async (req, res) => {
   await deleteEducationService(req.params.id);
 
   res.status(204).end();
+};
+
+export const uploadEducationImage = async (req, res) => {
+  const education = await uploadEducationImageService(req.params.id, req.file);
+
+  res.json({ data: education });
+};
+
+export const deleteEducationImage = async (req, res) => {
+  const education = await deleteEducationImageService(req.params.id);
+
+  res.json({ data: education });
 };

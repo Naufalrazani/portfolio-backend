@@ -11,6 +11,7 @@ const ALLOWED_FIELDS = [
   "title",
   "description",
   "organization",
+  "imageUrl",
   "date",
   "url",
   "sortOrder",
@@ -66,6 +67,12 @@ const validateFieldValues = (body, next) => {
   if (body.organization !== undefined && body.organization !== null) {
     if (typeof body.organization !== "string") {
       return next(validationError("Organization must be a string."));
+    }
+  }
+
+  if (body.imageUrl !== undefined && body.imageUrl !== null) {
+    if (typeof body.imageUrl !== "string") {
+      return next(validationError("Image URL must be a string."));
     }
   }
 

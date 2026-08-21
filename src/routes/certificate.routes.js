@@ -3,11 +3,14 @@ import { Router } from "express";
 import {
   createCertificate,
   deleteCertificate,
+  deleteCertificateImage,
   getCertificateById,
   getCertificates,
   updateCertificate,
+  uploadCertificateImage,
 } from "../controllers/certificate.controller.js";
 import { authenticate, optionalAuthenticate } from "../middlewares/auth.middleware.js";
+import { uploadEntityImageFile } from "../middlewares/upload.js";
 import {
   validateCreateCertificate,
   validateCertificateId,
@@ -45,6 +48,21 @@ router.delete(
   authenticate,
   validateCertificateId,
   deleteCertificate,
+);
+
+router.post(
+  "/certificates/:id/image",
+  authenticate,
+  validateCertificateId,
+  uploadEntityImageFile,
+  uploadCertificateImage,
+);
+
+router.delete(
+  "/certificates/:id/image",
+  authenticate,
+  validateCertificateId,
+  deleteCertificateImage,
 );
 
 export default router;

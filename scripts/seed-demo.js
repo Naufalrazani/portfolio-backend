@@ -169,31 +169,6 @@ const projects = [
     endDate: "2025-08-15",
     sortOrder: 4,
   },
-  {
-    title: "Personal Portfolio Website",
-    slug: "personal-portfolio",
-    shortDescription:
-      "This portfolio — a full-stack personal site with admin CMS.",
-    description:
-      "A personal portfolio website built from scratch with a Node.js/Express REST API, Prisma ORM, PostgreSQL, and a React frontend. Includes a public-facing portfolio display and an admin CMS for managing projects, skills, experience, education, certificates, achievements, and contact messages. The backend follows a layered architecture with route, controller, service, and repository layers. Authentication uses JWT with bcrypt password hashing.",
-    technologies: [
-      "React",
-      "Node.js",
-      "Express",
-      "Prisma",
-      "PostgreSQL",
-      "JWT",
-    ],
-    repositoryUrl: null,
-    demoUrl: null,
-    category: "Web Development",
-    status: "IN_PROGRESS",
-    published: true,
-    featured: false,
-    startDate: "2025-10-01",
-    endDate: null,
-    sortOrder: 5,
-  },
 ];
 
 const projectImages = [];
@@ -301,6 +276,7 @@ async function seedExperiences() {
         data: {
           description: exp.description,
           location: exp.location,
+          imageUrl: null,
           startDate: new Date(exp.startDate),
           endDate: exp.endDate ? new Date(exp.endDate) : null,
           sortOrder: exp.sortOrder,
@@ -311,6 +287,7 @@ async function seedExperiences() {
       await prisma.experience.create({
         data: {
           ...exp,
+          imageUrl: null,
           startDate: new Date(exp.startDate),
           endDate: exp.endDate ? new Date(exp.endDate) : null,
         },
@@ -484,6 +461,7 @@ async function seedAchievements() {
         data: {
           description: ach.description,
           organization: ach.organization,
+          imageUrl: null,
           date: ach.date ? new Date(ach.date) : null,
           url: ach.url,
           sortOrder: ach.sortOrder,
@@ -494,6 +472,7 @@ async function seedAchievements() {
       await prisma.achievement.create({
         data: {
           ...ach,
+          imageUrl: null,
           date: ach.date ? new Date(ach.date) : null,
         },
       });
